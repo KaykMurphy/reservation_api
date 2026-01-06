@@ -8,7 +8,7 @@ public record RoomResponseDTO(
         String name,
         Integer capacity,
         BigDecimal pricePerHour,
-        String type,
+        com.reservation.room_reservation_api.domain.RoomType type,
         Boolean active
 
 ) {
