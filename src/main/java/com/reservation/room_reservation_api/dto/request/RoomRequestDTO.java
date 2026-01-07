@@ -1,8 +1,6 @@
-package com.reservation.room_reservation_api.dto;
+package com.reservation.room_reservation_api.dto.request;
 
 import com.reservation.room_reservation_api.domain.RoomType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

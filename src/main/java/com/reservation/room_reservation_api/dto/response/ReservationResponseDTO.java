@@ -1,11 +1,10 @@
-package com.reservation.room_reservation_api.dto;
+package com.reservation.room_reservation_api.dto.response;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record ReservationResponseDTO (
-
+public record ReservationResponseDTO(
         Long id,
         LocalDateTime startDateTime,
         LocalDateTime endDateTime,
@@ -14,5 +13,4 @@ public record ReservationResponseDTO (
         String status,
         UserResponseDTO user,
         RoomResponseDTO room
-) {
-}
+) {}

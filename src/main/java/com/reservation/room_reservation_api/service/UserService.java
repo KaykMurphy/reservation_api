@@ -1,8 +1,8 @@
 package com.reservation.room_reservation_api.service;
 
 import com.reservation.room_reservation_api.domain.User;
-import com.reservation.room_reservation_api.dto.UserRequestDTO;
-import com.reservation.room_reservation_api.dto.UserResponseDTO;
+import com.reservation.room_reservation_api.dto.request.UserRequestDTO;
+import com.reservation.room_reservation_api.dto.response.UserResponseDTO;
 import com.reservation.room_reservation_api.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

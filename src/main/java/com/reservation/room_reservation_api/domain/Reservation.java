@@ -8,11 +8,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_reservations")
+@Getter @Setter @NoArgsConstructor
 public class Reservation {
 
     @Id
@@ -28,17 +26,20 @@ public class Reservation {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPrice;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ReservationStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "room_id")
     private Room room;
 
+    public LocalDateTime getEndDateTime() {
+        return startDateTime.plusHours(durationInHours);
+    }
 }
 

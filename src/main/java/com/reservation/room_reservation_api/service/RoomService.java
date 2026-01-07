@@ -1,23 +1,23 @@
 package com.reservation.room_reservation_api.service;
 
 import com.reservation.room_reservation_api.domain.Room;
-import com.reservation.room_reservation_api.dto.RoomRequestDTO;
-import com.reservation.room_reservation_api.dto.RoomResponseDTO;
+import com.reservation.room_reservation_api.dto.request.RoomRequestDTO;
+import com.reservation.room_reservation_api.dto.response.RoomResponseDTO;
+import com.reservation.room_reservation_api.exception.ResourceNotFoundException;
+import com.reservation.room_reservation_api.mapper.RoomMapper;
 import com.reservation.room_reservation_api.repository.RoomRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 import java.util.List;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public RoomResponseDTO createRoom(RoomRequestDTO dto){
+    public RoomResponseDTO createRoom(RoomRequestDTO dto) {
+
         Room room = new Room();
         room.setName(dto.name());
         room.setCapacity(dto.capacity());
@@ -25,51 +25,30 @@ public class RoomService {
         room.setPricePerHour(dto.pricePerHour());
         room.setActive(true);
 
-        Room roomSaved = roomRepository.save(room);
-
-        return new RoomResponseDTO(
-                roomSaved.getId(),
-                roomSaved.getName(),
-                roomSaved.getCapacity(),
-                roomSaved.getPricePerHour(),
-                roomSaved.getType(),
-                room.getActive()
+        return RoomMapper.toDTO(
+                roomRepository.save(room)
         );
     }
 
     public Room findRoomById(Long id) {
         return roomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Sala não encontrada com ID: " + id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Sala não encontrada com ID: " + id)
+                );
     }
 
     public List<RoomResponseDTO> getAllActiveRooms() {
-
-        return roomRepository.findByActiveTrue(true)
+        return roomRepository.findByActiveTrue()
                 .stream()
-                .map(room -> new RoomResponseDTO(
-                        room.getId(),
-                        room.getName(),
-                        room.getCapacity(),
-                        room.getPricePerHour(),
-                        room.getType(),
-                        room.getActive()
-                )).toList();
-
+                .map(RoomMapper::toDTO)
+                .toList();
     }
 
-    public void deactivateRoom(Long id){
-        Room room = roomRepository.findRoomById(id);
-
+    public void deactivateRoom(Long id) {
+        Room room = findRoomById(id);
         room.setActive(false);
-
         roomRepository.save(room);
-
     }
-
-
-
-
-
-
 }
+
 

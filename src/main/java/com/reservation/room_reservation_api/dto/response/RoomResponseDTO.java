@@ -1,4 +1,4 @@
-package com.reservation.room_reservation_api.dto;
+package com.reservation.room_reservation_api.dto.response;
 
 import java.math.BigDecimal;
 
